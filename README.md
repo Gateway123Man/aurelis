@@ -128,35 +128,6 @@ The launcher source code may be published separately. The website is intentional
 
 ---
 
-## Publishing this site with GitHub Pages
-
-1. Create a **public** GitHub repository named `aurelis`.
-2. Upload `index.html`, `privacy.html`, `PRIVACY.md`, and `README.md` to the repository root.
-3. Open **Settings → Pages**.
-4. Under **Build and deployment**, choose **Deploy from a branch**.
-5. Select the `main` branch and the `/ (root)` folder, then save.
-6. Wait for the deployment, then open `https://YOUR-USERNAME.github.io/aurelis/`.
-7. Test the link in a private/incognito window.
-
-### Before publishing
-
-Replace these placeholders everywhere:
-
-- `YOUR-USERNAME` — your GitHub username
-- `YOUR-EMAIL` — a contact email you are comfortable publishing
-- `https://YOUR-USERNAME.github.io/aurelis/` — your final site URL
-- The `og:url` value in `index.html`
-
-Also:
-
-- Keep `PRIVACY.md` and `privacy.html` in sync when the policy changes.
-- Update the “Last updated” date in both privacy documents.
-- If you use a custom domain, update the website URL and `og:url`.
-- Do not add analytics, trackers, or external scripts without updating the privacy policy.
-- Make sure the site is publicly accessible and does not require a login.
-
----
-
 ## Disclaimer
 
 Aurelis is an independent project. It is not affiliated with, endorsed by, or associated with Mojang Studios, Microsoft, Fabric, Modrinth, Adoptium, or any other third party. “Minecraft” is a trademark of Mojang Synergies AB. All other product names are used for identification only.
