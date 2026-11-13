@@ -6,9 +6,9 @@ Aurelis is an independent, local-first **Minecraft: Java Edition launcher and Fa
 
 **Status: pre-alpha.** There is no public download yet. This repository is the official public information hub and website for the project.
 
-- **Website:** https://YOUR-USERNAME.github.io/aurelis/
+- **Website:** https://Gateway123Man.github.io/aurelis/
 - **Privacy policy:** [PRIVACY.md](PRIVACY.md) · [privacy.html](privacy.html)
-- **Contact:** [GitHub Issues](https://github.com/YOUR-USERNAME/aurelis/issues) · mvpthespear1st@gmail.com
+- **Contact:** [GitHub Issues](https://github.com/Gateway123Man/aurelis/issues) · [mvpthespear1st@gmail.com](mailto:mvpthespear1st@gmail.com)
 
 ---
 
@@ -125,6 +125,35 @@ This repository is the public information hub for Aurelis. It contains:
 - `README.md` — this document
 
 The launcher source code may be published separately. The website is intentionally self-contained: no external fonts, scripts, trackers, or images.
+
+---
+
+## Publishing this site with GitHub Pages
+
+1. Create a **public** GitHub repository named `aurelis`.
+2. Upload `index.html`, `privacy.html`, `PRIVACY.md`, and `README.md` to the repository root.
+3. Open **Settings → Pages**.
+4. Under **Build and deployment**, choose **Deploy from a branch**.
+5. Select the `main` branch and the `/ (root)` folder, then save.
+6. Wait for the deployment, then open `https://Gateway123Man.github.io/aurelis/`.
+7. Test the link in a private/incognito window.
+
+### Before publishing
+
+The project details are already filled in:
+
+- GitHub username: `Gateway123Man`
+- Contact email: `mvpthespear1st@gmail.com`
+- Site URL: `https://Gateway123Man.github.io/aurelis/` (also used as `og:url` in `index.html`)
+
+Still worth checking:
+
+- Keep `PRIVACY.md` and `privacy.html` in sync when the policy changes.
+- Update the “Last updated” date in both privacy documents.
+- If you use a custom domain, update the website URL and `og:url`.
+- Do not add analytics, trackers, or external scripts without updating the privacy policy.
+- Make sure the site is publicly accessible and does not require a login.
+- Test the site in an incognito window before submitting it to a review form.
 
 ---
 
