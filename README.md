@@ -8,7 +8,7 @@ Aurelis is an independent, local-first **Minecraft: Java Edition launcher and Fa
 
 - **Website:** https://YOUR-USERNAME.github.io/aurelis/
 - **Privacy policy:** [PRIVACY.md](PRIVACY.md) · [privacy.html](privacy.html)
-- **Contact:** [GitHub Issues](https://github.com/YOUR-USERNAME/aurelis/issues) · YOUR-EMAIL
+- **Contact:** [GitHub Issues](https://github.com/YOUR-USERNAME/aurelis/issues) · mvpthespear1st@gmail.com
 
 ---
 
