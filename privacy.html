@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy Policy — Aurelis</title>
+  <meta name="description" content="Aurelis privacy policy: what the launcher stores locally, what leaves your device, and what it never collects. No telemetry, no analytics, no password handling.">
+  <meta name="theme-color" content="#07080b">
+  <meta name="color-scheme" content="dark">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2307080b'/%3E%3Ccircle cx='32' cy='32' r='21' fill='none' stroke='%23f2b45c' stroke-opacity='.35'/%3E%3Cpath d='M22 44 32 20l10 24M26.5 36h11' fill='none' stroke='%23f2b45c' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='45' cy='19' r='3' fill='%23ffd79a'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --bg: #07080b;
+      --surface: rgba(255, 255, 255, 0.035);
+      --line: rgba(255, 255, 255, 0.09);
+      --line-strong: rgba(242, 180, 92, 0.28);
+      --text: #f5f1e8;
+      --muted: #b7b0a4;
+      --faint: #817b71;
+      --gold: #f2b45c;
+      --gold-2: #ffd79a;
+      --teal: #5eead4;
+      --max: 860px;
+      --font: "Segoe UI Variable", "Segoe UI", -apple-system, BlinkMacSystemFont, "Inter", Roboto, Helvetica, Arial, sans-serif;
+      --mono: "Cascadia Code", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(900px 520px at 80% -10%, rgba(242, 180, 92, 0.10), transparent 62%),
+        var(--bg);
+      font-family: var(--font);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    ::selection { background: rgba(242, 180, 92, 0.28); color: #fff; }
+
+    a { color: var(--gold-2); text-decoration: none; border-bottom: 1px solid rgba(242, 180, 92, 0.3); }
+    a:hover { border-bottom-color: var(--gold); }
+    a:focus-visible, summary:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    .skip {
+      position: absolute;
+      left: -9999px;
+      top: 1rem;
+      z-index: 100;
+      padding: 0.7rem 1rem;
+      border-radius: 8px;
+      border-bottom: 0;
+      background: var(--gold);
+      color: #1b1205;
+      font-weight: 700;
+    }
+    .skip:focus { left: 1rem; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(7, 8, 11, 0.78);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      height: 68px;
+      width: min(1180px, calc(100% - 2.5rem));
+      margin-inline: auto;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      color: var(--text);
+      border-bottom: 0;
+      font-weight: 650;
+      letter-spacing: -0.02em;
+      font-size: 1rem;
+    }
+    .brand-mark { width: 28px; height: 28px; display: block; }
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-left: auto;
+      font-size: 0.87rem;
+    }
+    .header-nav a {
+      color: var(--muted);
+      border-bottom: 0;
+      transition: color 0.18s ease;
+    }
+    .header-nav a:hover { color: var(--text); }
+    .header-nav a.active { color: var(--gold-2); }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 2.5rem));
+      margin-inline: auto;
+    }
+
+    .page-head { padding: clamp(3rem, 6vw, 4.5rem) 0 2rem; }
+    .eyebrow {
+      margin: 0;
+      color: var(--gold);
+      font-size: 0.72rem;
+      font-weight: 650;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0.7rem 0 0.9rem;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      line-height: 1.03;
+      letter-spacing: -0.045em;
+      font-weight: 700;
+    }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.4rem;
+      margin: 0;
+      color: var(--faint);
+      font-size: 0.83rem;
+    }
+    .meta code {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      padding: 0.05rem 0.35rem;
+    }
+
+    .lede {
+      margin: 1.6rem 0 0;
+      padding: 1.3rem 1.4rem;
+      border: 1px solid var(--line-strong);
+      border-radius: 14px;
+      background:
+        radial-gradient(560px 200px at 10% 0%, rgba(242, 180, 92, 0.10), transparent 70%),
+        rgba(255, 255, 255, 0.025);
+      color: var(--text);
+      font-size: 1rem;
+    }
+    .lede p { margin: 0; }
+    .lede p + p { margin-top: 0.7rem; }
+    .lede strong { color: var(--gold-2); font-weight: 650; }
+
+    .toc {
+      margin: 2rem 0 0;
+      padding: 1.2rem 1.3rem;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .toc h2 {
+      margin: 0 0 0.7rem;
+      padding: 0;
+      border: 0;
+      color: var(--faint);
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 650;
+    }
+    .toc ol {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.2rem 1.6rem;
+      margin: 0;
+      padding-left: 1.1rem;
+      font-size: 0.89rem;
+      color: var(--muted);
+    }
+    .toc li { padding: 0.12rem 0; }
+    .toc a { border-bottom: 0; color: var(--muted); }
+    .toc a:hover { color: var(--gold-2); }
+
+    main { padding-bottom: 4rem; }
+
+    section { padding-top: 2.6rem; }
+    h2 {
+      margin: 0 0 0.9rem;
+      padding-top: 1.4rem;
+      border-top: 1px solid var(--line);
+      font-size: clamp(1.35rem, 2.6vw, 1.7rem);
+      letter-spacing: -0.028em;
+      font-weight: 680;
+      line-height: 1.2;
+    }
+    h3 {
+      margin: 1.7rem 0 0.6rem;
+      font-size: 1.02rem;
+      letter-spacing: -0.012em;
+      font-weight: 650;
+      color: var(--text);
+    }
+    p, li { color: var(--muted); font-size: 0.95rem; }
+    p { margin: 0 0 0.95rem; }
+    ul, ol { margin: 0 0 1rem; padding-left: 1.3rem; }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: rgba(242, 180, 92, 0.7); }
+    strong { color: var(--text); font-weight: 650; }
+    code {
+      font-family: var(--mono);
+      font-size: 0.85em;
+      color: var(--gold-2);
+      background: rgba(242, 180, 92, 0.08);
+      border: 1px solid rgba(242, 180, 92, 0.16);
+      border-radius: 5px;
+      padding: 0.08rem 0.34rem;
+    }
+
+    .table-scroll {
+      margin: 0 0 1.1rem;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.89rem;
+      min-width: 520px;
+    }
+    caption {
+      caption-side: top;
+      padding: 0.7rem 1rem;
+      text-align: left;
+      color: var(--faint);
+      font-size: 0.78rem;
+    }
+    th, td {
+      padding: 0.7rem 1rem;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+    }
+    th {
+      color: var(--text);
+      font-weight: 640;
+      font-size: 0.79rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.035);
+      white-space: nowrap;
+    }
+    tbody tr:last-child td { border-bottom: 0; }
+    td:first-child { color: var(--text); }
+
+    .callout {
+      margin: 1.1rem 0;
+      padding: 1rem 1.2rem;
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--gold);
+      border-radius: 10px;
+      background: rgba(242, 180, 92, 0.055);
+    }
+    .callout p { margin: 0; font-size: 0.92rem; }
+    .callout p + p { margin-top: 0.55rem; }
+
+    .callout.teal {
+      border-left-color: var(--teal);
+      background: rgba(94, 234, 212, 0.05);
+    }
+
+    .contact-card {
+      margin-top: 1.2rem;
+      padding: 1.4rem;
+      border: 1px solid var(--line-strong);
+      border-radius: 14px;
+      background:
+        radial-gradient(520px 200px at 15% 0%, rgba(242, 180, 92, 0.11), transparent 70%),
+        rgba(255, 255, 255, 0.025);
+    }
+    .contact-card p { margin: 0 0 0.4rem; font-size: 0.93rem; }
+    .contact-card p:last-child { margin-bottom: 0; }
+    .contact-card .label {
+      display: inline-block;
+      min-width: 6.5rem;
+      color: var(--faint);
+      font-size: 0.76rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .back-top {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 2.6rem;
+      padding: 0.55rem 0.9rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 0.83rem;
+      border-bottom: 1px solid var(--line);
+      transition: border-color 0.18s ease, color 0.18s ease;
+    }
+    .back-top:hover { border-color: var(--line-strong); color: var(--gold-2); }
+
+    footer {
+      padding: 2.4rem 0 2rem;
+      border-top: 1px solid var(--line);
+      color: var(--faint);
+      font-size: 0.81rem;
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.6rem;
+      width: min(1180px, calc(100% - 2.5rem));
+      margin-inline: auto;
+    }
+    .footer-inner p { margin: 0; color: var(--faint); font-size: 0.81rem; }
+    .footer-brand { max-width: 620px; }
+    .footer-brand .brand { margin-bottom: 0.7rem; }
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem 1.2rem;
+      align-content: start;
+    }
+    .footer-links a { color: var(--muted); border-bottom: 0; font-size: 0.83rem; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-bottom {
+      width: min(1180px, calc(100% - 2.5rem));
+      margin: 1.8rem auto 0;
+      color: var(--faint);
+      font-size: 0.75rem;
+    }
+
+    @media (max-width: 720px) {
+      .header-nav { display: none; }
+      .toc ol { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; }
+    }
+    @media (max-width: 420px) {
+      .wrap { width: calc(100% - 1.6rem); }
+      .header-inner { width: calc(100% - 1.6rem); height: 62px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+    }
+    @media print {
+      body { background: #fff; color: #111; }
+      .site-header, .toc, .back-top, footer { display: none; }
+      h1, h2, h3, strong, td:first-child { color: #000; }
+      p, li, td, th { color: #222; }
+      a { color: #000; border-bottom: 0; }
+      section { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="Aurelis home">
+        <svg class="brand-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <circle cx="16" cy="16" r="13" stroke="currentColor" stroke-opacity="0.32" stroke-width="1.2"/>
+          <path d="M10 23.5 16 8l6 15.5" stroke="#ffd79a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M12.4 19.2h7.2" stroke="#f2b45c" stroke-width="2.4" stroke-linecap="round"/>
+          <circle cx="24.5" cy="9.5" r="2" fill="#f2b45c"/>
+        </svg>
+        <span>Aurelis</span>
+      </a>
+      <nav class="header-nav" aria-label="Primary">
+        <a href="index.html">Overview</a>
+        <a href="index.html#features">Features</a>
+        <a href="index.html#fair-play">Fair play</a>
+        <a href="index.html#faq">FAQ</a>
+        <a class="active" href="privacy.html" aria-current="page">Privacy</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="wrap">
+      <div class="page-head">
+        <p class="eyebrow">Privacy policy</p>
+        <h1>What Aurelis stores, and what it never does.</h1>
+        <p class="meta">
+          <span><strong>Last updated:</strong> 13 November 2026</span>
+          <span>Applies to the launcher, the Fabric client mod, and this website</span>
+        </p>
+
+        <div class="lede">
+          <p>Aurelis is an independent, local-first project. This page explains exactly what is stored, what leaves your device, and what does not. It is written to be read, not to hide things.</p>
+          <p><strong>If something here is unclear, ask:</strong> <a href="mailto:mvpthespear1st@gmail.com?subject=Aurelis%20privacy%20question">mvpthespear1st@gmail.com</a>.</p>
+        </div>
+
+        <nav class="toc" aria-labelledby="toc-title">
+          <h2 id="toc-title">Contents</h2>
+          <ol>
+            <li><a href="#short">The short version</a></li>
+            <li><a href="#who">Who is responsible</a></li>
+            <li><a href="#local">What is stored on your device</a></li>
+            <li><a href="#network">What leaves your device</a></li>
+            <li><a href="#website">This website</a></li>
+            <li><a href="#sharing">Sharing</a></li>
+            <li><a href="#retention">Retention and deletion</a></li>
+            <li><a href="#security">Security</a></li>
+            <li><a href="#children">Children</a></li>
+            <li><a href="#choices">Your choices</a></li>
+            <li><a href="#changes">Changes</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ol>
+        </nav>
+      </div>
+
+      <section id="short">
+        <h2>The short version</h2>
+        <ul>
+          <li>Aurelis has <strong>no telemetry and no analytics</strong>.</li>
+          <li>Your Microsoft password is <strong>never</strong> requested, seen, or stored.</li>
+          <li>Account tokens are stored in your operating system's credential vault, not in plain files.</li>
+          <li>Profiles, worlds, mods, logs, screenshots, and playtime stay <strong>on your device</strong>.</li>
+          <li>Crash reports and logs are <strong>never uploaded automatically</strong>.</li>
+          <li>The only network requests are the ones needed to do what you asked: sign in, download game files and mods, check server status, and fetch metadata.</li>
+          <li>This website uses <strong>no cookies, no trackers, and no external scripts</strong>.</li>
+        </ul>
+      </section>
+
+      <section id="who">
+        <h2>1. Who is responsible</h2>
+        <p>Aurelis is an independent project maintained by its developer. For any privacy question, request, or complaint, contact <a href="mailto:mvpthespear1st@gmail.com?subject=Aurelis%20privacy%20question">mvpthespear1st@gmail.com</a>.</p>
+        <p>Aurelis is <strong>not affiliated with</strong> Mojang Studios, Microsoft, Fabric, Modrinth, Adoptium, or any other third party. Those services have their own privacy policies, which apply when you use them through Aurelis.</p>
+      </section>
+
+      <section id="local">
+        <h2>2. What Aurelis stores on your device</h2>
+        <p>Aurelis uses its own managed data directory. It does not read or copy account data from other launchers.</p>
+
+        <h3>2.1 Account information</h3>
+        <div class="table-scroll">
+          <table>
+            <caption>Account data stored by Aurelis.</caption>
+            <thead>
+              <tr><th scope="col">Data</th><th scope="col">Where it is stored</th><th scope="col">Why</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Microsoft account identifier (UUID)</td><td>Local database</td><td>To tell accounts apart</td></tr>
+              <tr><td>Minecraft profile name and UUID</td><td>Local database</td><td>Display and launch arguments</td></tr>
+              <tr><td>Account skin and cape URLs</td><td>Local cache</td><td>Display in the launcher</td></tr>
+              <tr><td>OAuth refresh token</td><td>OS credential vault</td><td>To keep you signed in without re-authenticating</td></tr>
+              <tr><td>OAuth access token</td><td>Memory only</td><td>Short-lived; used for API calls and launch</td></tr>
+              <tr><td>Token expiry timestamps</td><td>Local database</td><td>To refresh before expiry</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>The refresh token is stored using the operating system credential store:</p>
+        <ul>
+          <li><strong>Windows:</strong> Credential Manager (DPAPI-protected)</li>
+          <li><strong>macOS:</strong> Keychain</li>
+          <li><strong>Linux:</strong> Secret Service (GNOME Keyring, KWallet, or equivalent)</li>
+        </ul>
+        <p>If the credential vault is unavailable, Aurelis will tell you rather than silently writing the token to a plain file.</p>
+
+        <div class="callout">
+          <p><strong>Aurelis never stores:</strong> your Microsoft password, MFA codes, recovery codes, or payment information. Sign-in happens on Microsoft's own pages in your browser.</p>
+        </div>
+
+        <h3>2.2 Profiles and game data</h3>
+        <p>Stored locally, under the Aurelis data directory:</p>
+        <ul>
+          <li>Profiles: name, Minecraft version, mod loader and loader version, game directory, Java path, memory settings, resolution, JVM and game arguments, mod list, HUD layout.</li>
+          <li>Game files, libraries, assets, and Java runtimes downloaded for each installation.</li>
+          <li>Mods, resource packs, shader packs, and modpack files you install.</li>
+          <li>Worlds and world backups you create.</li>
+          <li>Server entries: name, address, port, group, favourite flag, notes, and per-server overrides.</li>
+          <li>HUD layouts and module settings.</li>
+          <li>Screenshots and logs produced by the game.</li>
+          <li>Launch history and session playtime.</li>
+          <li>Launcher settings, including theme and accent colour.</li>
+        </ul>
+
+        <h3>2.3 Diagnostics</h3>
+        <ul>
+          <li>Launcher logs and game logs are written locally.</li>
+          <li>Crash analysis runs locally on those logs.</li>
+          <li>Diagnostic reports are only created when you explicitly export them.</li>
+          <li>Exported reports redact account tokens, session identifiers, and access tokens before writing.</li>
+        </ul>
+
+        <h3>2.4 What Aurelis does not collect</h3>
+        <p>Aurelis does not collect or transmit: your name, email address, IP-based location profiles, device fingerprint, contact list, browsing history, keystrokes outside the game, clipboard contents, or files unrelated to Minecraft.</p>
+      </section>
+
+      <section id="network">
+        <h2>3. What leaves your device, and when</h2>
+        <p>Aurelis only makes network requests needed for a feature you used. Every outbound request falls into one of these categories.</p>
+
+        <h3>3.1 Microsoft and Xbox authentication</h3>
+        <p>When you add or refresh an account, Aurelis contacts Microsoft identity and Xbox Live endpoints to complete the OAuth 2.0 device-code flow and obtain Minecraft access.</p>
+        <ul>
+          <li>Data sent: your OAuth request, device code, and refresh token.</li>
+          <li>Data received: access tokens and your Xbox/Minecraft account identifiers.</li>
+        </ul>
+        <p>The device-code flow means you enter a code on Microsoft's website in your browser. Aurelis never handles your password. See the <a href="https://privacy.microsoft.com/privacystatement" rel="noopener noreferrer">Microsoft privacy statement</a>.</p>
+
+        <h3>3.2 Mojang and Minecraft services</h3>
+        <p>To install and launch the game, Aurelis contacts Mojang/Microsoft services for version manifests, asset indexes, library and asset downloads, Java runtime metadata, news, and your Minecraft profile, entitlements, and skins. Launching the game sends a normal Minecraft session request, as any launcher does.</p>
+
+        <h3>3.3 Mod and modpack sources</h3>
+        <ul>
+          <li><strong>Modrinth:</strong> search, project metadata, version files, and <code>.mrpack</code> downloads. Requests include the search terms and project identifiers you use. See the <a href="https://modrinth.com/legal/privacy" rel="noopener noreferrer">Modrinth privacy policy</a>.</li>
+          <li><strong>CurseForge:</strong> only if you configure an API key and use CurseForge features. See the <a href="https://www.curseforge.com/legal/privacy" rel="noopener noreferrer">CurseForge privacy policy</a>.</li>
+          <li><strong>Fabric, Quilt, Forge, NeoForge metadata:</strong> loader versions and installer information.</li>
+        </ul>
+        <p>Aurelis does not send your account tokens to mod sources. Downloads are fetched over HTTPS and verified against published hashes where the source provides them.</p>
+
+        <h3>3.4 Server status and quick connect</h3>
+        <p>When you refresh a server entry, Aurelis sends a standard Minecraft server-list ping to that server's address. That server will see your IP address, exactly as it would if you added it in the vanilla client. Aurelis does not ping servers in the background; pings happen when you request them or open the Servers page.</p>
+
+        <h3>3.5 Update checks</h3>
+        <p>If update checks are enabled, Aurelis requests a version manifest from the configured release endpoint. No account data is included.</p>
+
+        <h3>3.6 Optional community features</h3>
+        <p>If a future version offers a community layout gallery or similar service, it will be <strong>opt-in</strong>, will identify itself clearly, and will be described in an updated version of this policy before it is enabled. Aurelis will not turn such a feature on silently.</p>
+      </section>
+
+      <section id="website">
+        <h2>4. This website</h2>
+        <p>This website is a set of static files. It contains:</p>
+        <ul>
+          <li>No cookies</li>
+          <li>No analytics or tracking scripts</li>
+          <li>No advertising</li>
+          <li>No external fonts, images, or JavaScript</li>
+          <li>No forms that submit data to us</li>
+        </ul>
+        <p>The site is served by a hosting provider (for example, GitHub Pages), which may keep standard web server logs such as IP address, user agent, and requested page for security and operational purposes. Aurelis does not receive or analyse those logs.</p>
+        <p>If you email the project, your message and email address are used only to reply to you.</p>
+      </section>
+
+      <section id="sharing">
+        <h2>5. Sharing</h2>
+        <p>Aurelis does not sell, rent, or share personal data. There is no data broker, advertising network, or analytics vendor involved.</p>
+        <p>Data leaves your device only in the cases described in section 3, or when <strong>you</strong> choose to export or share it — for example, exporting a diagnostic report, a HUD layout, or a mod list.</p>
+        <p>If you publish an exported file publicly, it is your responsibility to check what it contains.</p>
+      </section>
+
+      <section id="retention">
+        <h2>6. Retention and deletion</h2>
+        <p>Local data is kept until you delete it.</p>
+        <ul>
+          <li><strong>Remove an account</strong> in Settings to delete its stored refresh token from the credential vault and its metadata from the local database.</li>
+          <li><strong>Delete a profile</strong> to remove its configuration; you choose whether to also delete its game directory.</li>
+          <li><strong>Clear logs</strong> or delete the Aurelis data directory to remove logs and caches.</li>
+          <li><strong>Uninstalling</strong> the launcher does not always remove the data directory or credential entries. Aurelis provides an in-app option to remove local data on uninstall where the platform allows it.</li>
+        </ul>
+        <p>Because Aurelis has no server-side account database, there is no remote copy of your data to request or delete. Requests about data held by Microsoft, Mojang, Modrinth, or a Minecraft server must go to those providers.</p>
+      </section>
+
+      <section id="security">
+        <h2>7. Security</h2>
+        <p>Aurelis takes the following measures:</p>
+        <ul>
+          <li>OAuth 2.0 device-code flow; no password handling.</li>
+          <li>Refresh tokens in the OS credential vault.</li>
+          <li>Access tokens kept in memory and excluded from logs.</li>
+          <li>HTTPS for all network requests.</li>
+          <li>Hash verification of downloads where the source publishes hashes.</li>
+          <li>ZIP extraction that rejects path traversal and unexpected absolute paths.</li>
+          <li>Redaction of tokens and session data in exported diagnostics.</li>
+        </ul>
+        <div class="callout teal">
+          <p>No system is perfectly secure. If you believe you have found a vulnerability, please report it privately to <a href="mailto:mvpthespear1st@gmail.com?subject=Aurelis%20security%20report">mvpthespear1st@gmail.com</a> rather than opening a public issue with exploit details.</p>
+        </div>
+      </section>
+
+      <section id="children">
+        <h2>8. Children</h2>
+        <p>Aurelis is not directed at children under 13. It does not knowingly collect personal information from anyone. Because the launcher has no server-side user database, it does not build profiles of its users.</p>
+        <p>Minecraft accounts are Microsoft accounts, and Microsoft's own age requirements apply.</p>
+      </section>
+
+      <section id="choices">
+        <h2>9. Your choices</h2>
+        <ul>
+          <li>Use Aurelis without signing in, if you only need local features that do not require an account.</li>
+          <li>Decline update checks.</li>
+          <li>Avoid Modrinth or CurseForge features if you do not want those requests made.</li>
+          <li>Remove accounts and delete local data at any time.</li>
+          <li>Keep diagnostics on your device and never export them.</li>
+        </ul>
+      </section>
+
+      <section id="changes">
+        <h2>10. Changes to this policy</h2>
+        <p>If this policy changes, the "Last updated" date at the top will change, and material changes will be described in the project's release notes or on this website.</p>
+        <p>If a future feature would send new categories of data off your device, it will be opt-in and disclosed before it is enabled.</p>
+      </section>
+
+      <section id="contact">
+        <h2>11. Contact</h2>
+        <div class="contact-card">
+          <p><span class="label">Email</span><a href="mailto:mvpthespear1st@gmail.com?subject=Aurelis%20privacy%20question">mvpthespear1st@gmail.com</a></p>
+          <p><span class="label">Repository</span><a href="https://github.com/Gateway123Man/aurelis" rel="noopener noreferrer">github.com/Gateway123Man/aurelis</a></p>
+          <p><span class="label">Website</span><a href="https://Gateway123Man.github.io/aurelis/">Gateway123Man.github.io/aurelis</a></p>
+        </div>
+
+        <a class="back-top" href="#main">Back to top</a>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" aria-label="Aurelis home">
+          <svg class="brand-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <circle cx="16" cy="16" r="13" stroke="currentColor" stroke-opacity="0.32" stroke-width="1.2"/>
+            <path d="M10 23.5 16 8l6 15.5" stroke="#ffd79a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12.4 19.2h7.2" stroke="#f2b45c" stroke-width="2.4" stroke-linecap="round"/>
+            <circle cx="24.5" cy="9.5" r="2" fill="#f2b45c"/>
+          </svg>
+          <span>Aurelis</span>
+        </a>
+        <p>Aurelis is an independent project and is not affiliated with, endorsed by, or associated with Mojang Studios, Microsoft, Fabric, Modrinth, or any other third party. "Minecraft" is a trademark of Mojang Synergies AB.</p>
+      </div>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="index.html">Overview</a>
+        <a href="index.html#features">Features</a>
+        <a href="index.html#fair-play">Fair play</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="mailto:mvpthespear1st@gmail.com">Contact</a>
+      </nav>
+    </div>
+    <p class="footer-bottom">© 2026 Aurelis. Website content is provided for project information. Brand assets may not be reused without permission.</p>
+  </footer>
+</body>
+</html>
