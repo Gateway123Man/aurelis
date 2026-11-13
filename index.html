@@ -1,0 +1,1091 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aurelis — Your world, in a new light.</title>
+  <meta name="description" content="Aurelis is an independent, local-first Minecraft: Java Edition launcher and Fabric client in development. Secure Microsoft sign-in, isolated profiles, mods, worlds, servers, and a fair-play HUD.">
+  <meta name="theme-color" content="#07080b">
+  <meta name="color-scheme" content="dark">
+  <meta property="og:title" content="Aurelis — Your world, in a new light.">
+  <meta property="og:description" content="An independent, local-first Minecraft: Java Edition launcher and Fabric client in development. Fair play. Honest performance tools. A HUD that stays out of your way.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://YOUR-USERNAME.github.io/aurelis/">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2307080b'/%3E%3Ccircle cx='32' cy='32' r='21' fill='none' stroke='%23f2b45c' stroke-opacity='.35'/%3E%3Cpath d='M22 44 32 20l10 24M26.5 36h11' fill='none' stroke='%23f2b45c' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='45' cy='19' r='3' fill='%23ffd79a'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --bg: #07080b;
+      --bg-soft: #0b0d12;
+      --surface: rgba(255, 255, 255, 0.035);
+      --surface-2: rgba(255, 255, 255, 0.06);
+      --line: rgba(255, 255, 255, 0.09);
+      --line-strong: rgba(242, 180, 92, 0.28);
+      --text: #f5f1e8;
+      --muted: #b7b0a4;
+      --faint: #817b71;
+      --gold: #f2b45c;
+      --gold-2: #ffd79a;
+      --gold-3: #c98a35;
+      --teal: #5eead4;
+      --danger: #ff7a6b;
+      --max: 1180px;
+      --radius: 18px;
+      --font: "Segoe UI Variable", "Segoe UI", -apple-system, BlinkMacSystemFont, "Inter", Roboto, Helvetica, Arial, sans-serif;
+      --mono: "Cascadia Code", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(1000px 650px at 74% -12%, rgba(242, 180, 92, 0.13), transparent 62%),
+        radial-gradient(850px 650px at -5% 16%, rgba(94, 234, 212, 0.055), transparent 60%),
+        var(--bg);
+      font-family: var(--font);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+
+    ::selection { background: rgba(242, 180, 92, 0.28); color: #fff; }
+
+    a { color: inherit; }
+    a:focus-visible,
+    summary:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 3px;
+      border-radius: 6px;
+    }
+
+    .skip {
+      position: absolute;
+      left: -9999px;
+      top: 1rem;
+      z-index: 100;
+      padding: 0.7rem 1rem;
+      border-radius: 8px;
+      background: var(--gold);
+      color: #1b1205;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .skip:focus { left: 1rem; }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 2.5rem));
+      margin-inline: auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(7, 8, 11, 0.72);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      height: 72px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 650;
+      letter-spacing: -0.02em;
+      font-size: 1.02rem;
+      flex: 0 0 auto;
+    }
+    .brand-mark { width: 30px; height: 30px; display: block; }
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 1.35rem;
+      margin-left: auto;
+    }
+    .site-nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.18s ease;
+    }
+    .site-nav a:hover { color: var(--text); }
+    .header-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 0.9rem;
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      color: var(--gold-2);
+      background: rgba(242, 180, 92, 0.07);
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      transition: background 0.18s ease, border-color 0.18s ease;
+    }
+    .header-cta:hover { background: rgba(242, 180, 92, 0.13); border-color: var(--gold); }
+    .header-cta .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 10px rgba(242, 180, 92, 0.8);
+    }
+
+    .hero {
+      position: relative;
+      padding: clamp(4rem, 8vw, 7rem) 0 clamp(4rem, 7vw, 6rem);
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.38;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+      background-size: 64px 64px;
+      -webkit-mask-image: radial-gradient(ellipse at 55% 10%, black 0%, transparent 72%);
+      mask-image: radial-gradient(ellipse at 55% 10%, black 0%, transparent 72%);
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -28%;
+      width: 900px;
+      height: 900px;
+      transform: translateX(-50%);
+      pointer-events: none;
+      background: radial-gradient(circle, rgba(242, 180, 92, 0.07), transparent 62%);
+      filter: blur(20px);
+    }
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: clamp(2rem, 5vw, 5rem);
+      align-items: center;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.42rem 0.75rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--muted);
+      font-size: 0.73rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .badge .pulse {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 0 0 rgba(242, 180, 92, 0.45);
+      animation: pulse 2.8s ease-out infinite;
+    }
+    h1 {
+      margin: 1.15rem 0 1.25rem;
+      font-size: clamp(3.2rem, 7vw, 6.4rem);
+      line-height: 0.92;
+      letter-spacing: -0.058em;
+      font-weight: 720;
+    }
+    h1 .grad {
+      background: linear-gradient(100deg, #fff4df 0%, var(--gold-2) 34%, var(--gold) 66%, #b9772b 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .lede {
+      max-width: 58ch;
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(1.02rem, 1.45vw, 1.16rem);
+      line-height: 1.7;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 2rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.25rem;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      font: inherit;
+      font-size: 0.94rem;
+      font-weight: 650;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn.primary {
+      background: linear-gradient(180deg, var(--gold-2), var(--gold));
+      color: #1b1205;
+      box-shadow: 0 14px 34px -14px rgba(242, 180, 92, 0.6);
+    }
+    .btn.primary:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -14px rgba(242, 180, 92, 0.7); }
+    .btn.ghost {
+      color: var(--text);
+      border-color: var(--line);
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .btn.ghost:hover { border-color: var(--line-strong); background: rgba(255, 255, 255, 0.06); }
+    .fine { margin: 1.15rem 0 0; color: var(--faint); font-size: 0.81rem; }
+
+    .hero-art {
+      position: relative;
+      min-height: 450px;
+      display: grid;
+      place-items: center;
+      isolation: isolate;
+    }
+    .solar {
+      position: relative;
+      width: min(420px, 92%);
+      aspect-ratio: 1;
+      animation: breathe 9s ease-in-out infinite;
+    }
+    .solar::before {
+      content: "";
+      position: absolute;
+      inset: 7%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(242, 180, 92, 0.2), transparent 66%);
+      filter: blur(18px);
+    }
+    .ring {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .ring-outer {
+      inset: 0;
+      border: 1px solid rgba(242, 180, 92, 0.24);
+      transform: rotate(-18deg) scaleY(0.72);
+      box-shadow: inset 0 0 70px rgba(242, 180, 92, 0.05);
+    }
+    .ring-mid {
+      inset: 12%;
+      border: 1px dashed rgba(94, 234, 212, 0.22);
+      transform: rotate(24deg) scaleY(0.78);
+    }
+    .ring-inner {
+      inset: 24%;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      transform: rotate(-40deg) scaleY(0.9);
+    }
+    .sun {
+      position: absolute;
+      inset: 36%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #fff5dc, var(--gold-2) 25%, var(--gold) 56%, #a8641f 100%);
+      box-shadow: 0 0 60px rgba(242, 180, 92, 0.55), 0 0 150px rgba(242, 180, 92, 0.18);
+    }
+    .sun::after {
+      content: "";
+      position: absolute;
+      inset: 18%;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.32);
+      opacity: 0.55;
+    }
+    .planet {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--gold-2);
+      box-shadow: 0 0 18px rgba(242, 180, 92, 0.85);
+    }
+    .p1 { top: 14%; left: 18%; }
+    .p2 {
+      bottom: 20%;
+      right: 14%;
+      width: 7px;
+      height: 7px;
+      background: var(--teal);
+      box-shadow: 0 0 18px rgba(94, 234, 212, 0.85);
+    }
+    .float-card {
+      position: absolute;
+      z-index: 2;
+      padding: 1rem 1.1rem;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(13, 15, 20, 0.74);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.9);
+      animation: float 7s ease-in-out infinite;
+    }
+    .profile-card { top: 7%; left: 0; min-width: 188px; }
+    .hud-card { bottom: 5%; right: 0; min-width: 176px; animation-delay: -3.5s; }
+    .float-label {
+      display: block;
+      margin-bottom: 0.35rem;
+      color: var(--faint);
+      font-size: 0.68rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .profile-card strong { display: block; font-size: 0.95rem; letter-spacing: -0.01em; }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+      color: var(--teal);
+      font-size: 0.72rem;
+    }
+    .status-pill i {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 10px var(--teal);
+    }
+    .hud-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 1.5rem;
+      padding: 0.13rem 0;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.77rem;
+    }
+    .hud-row b { color: var(--text); font-weight: 600; }
+    .hud-row b span { margin-left: 0.1rem; color: var(--faint); font-size: 0.64rem; }
+
+    .section {
+      padding: clamp(4rem, 7vw, 6rem) 0;
+      border-top: 1px solid var(--line);
+    }
+    .section-head {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 2rem;
+      align-items: end;
+      margin-bottom: 2.5rem;
+    }
+    .eyebrow {
+      margin: 0;
+      color: var(--gold);
+      font-size: 0.72rem;
+      font-weight: 650;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    h2 {
+      margin: 0.6rem 0 0;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.02;
+      letter-spacing: -0.048em;
+      font-weight: 700;
+    }
+    .section-head > p {
+      margin: 0;
+      max-width: 62ch;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .grid-3, .grid-4 {
+      display: grid;
+      gap: 1rem;
+    }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .card {
+      padding: 1.4rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(242, 180, 92, 0.26);
+      background: linear-gradient(180deg, rgba(242, 180, 92, 0.06), rgba(255, 255, 255, 0.015));
+    }
+    .icon {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(242, 180, 92, 0.18);
+      border-radius: 11px;
+      color: var(--gold);
+      background: rgba(242, 180, 92, 0.09);
+    }
+    .icon svg { width: 19px; height: 19px; }
+    .card h3 {
+      margin: 0.2rem 0 0.45rem;
+      font-size: 1.02rem;
+      letter-spacing: -0.012em;
+      font-weight: 650;
+    }
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.91rem;
+      line-height: 1.65;
+    }
+    .tag {
+      display: inline-block;
+      margin-top: 1rem;
+      color: var(--faint);
+      font-size: 0.66rem;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 2rem;
+      align-items: start;
+    }
+    .checklist {
+      display: grid;
+      gap: 0.85rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .checklist li {
+      display: flex;
+      gap: 0.75rem;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+    .check {
+      flex: 0 0 20px;
+      display: grid;
+      place-items: center;
+      width: 20px;
+      height: 20px;
+      margin-top: 0.15rem;
+      border: 1px solid rgba(94, 234, 212, 0.28);
+      border-radius: 50%;
+      color: var(--teal);
+      background: rgba(94, 234, 212, 0.07);
+    }
+    .check svg { width: 11px; height: 11px; }
+    .quote-panel {
+      padding: 1.8rem;
+      border: 1px solid rgba(242, 180, 92, 0.24);
+      border-radius: var(--radius);
+      background:
+        radial-gradient(520px 220px at 20% 0%, rgba(242, 180, 92, 0.13), transparent 70%),
+        rgba(255, 255, 255, 0.025);
+    }
+    .quote-panel .eyebrow {
+      margin-bottom: 0.8rem;
+      color: var(--gold);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      max-width: none;
+    }
+    .quote-panel > p:not(.eyebrow) {
+      margin: 0;
+      color: var(--text);
+      font-size: 1.12rem;
+      line-height: 1.55;
+      letter-spacing: -0.015em;
+    }
+    .quote-panel small {
+      display: block;
+      margin-top: 1rem;
+      color: var(--faint);
+      font-size: 0.8rem;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    .step {
+      position: relative;
+      padding: 1.3rem;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .step .num {
+      color: var(--gold);
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      letter-spacing: 0.04em;
+    }
+    .step h3 { margin: 0.55rem 0 0.3rem; font-size: 0.98rem; letter-spacing: -0.01em; }
+    .step p { margin: 0; color: var(--muted); font-size: 0.86rem; line-height: 1.6; }
+    .step.current {
+      border-color: rgba(242, 180, 92, 0.34);
+      background: linear-gradient(180deg, rgba(242, 180, 92, 0.08), rgba(255, 255, 255, 0.02));
+    }
+    .step .badge {
+      margin-top: 0.9rem;
+      padding: 0.28rem 0.5rem;
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+    }
+
+    .faq { display: grid; gap: 0.7rem; max-width: 920px; }
+    details {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+    details[open] { border-color: rgba(242, 180, 92, 0.2); }
+    summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 1.2rem;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 600;
+      list-style: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: "+";
+      color: var(--gold);
+      font-size: 1.2rem;
+      line-height: 1;
+      transition: transform 0.2s ease;
+    }
+    details[open] summary::after { transform: rotate(45deg); }
+    details p {
+      margin: 0;
+      padding: 0 1.2rem 1.1rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+    details p + p { padding-top: 0.2rem; }
+
+    .contact-panel {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 2rem;
+      padding: clamp(1.6rem, 4vw, 3rem);
+      border: 1px solid rgba(242, 180, 92, 0.25);
+      border-radius: 24px;
+      background:
+        radial-gradient(700px 300px at 15% 0%, rgba(242, 180, 92, 0.13), transparent 65%),
+        rgba(255, 255, 255, 0.025);
+    }
+    .contact-panel h2 { margin-bottom: 0.5rem; }
+    .contact-panel > div > p:not(.eyebrow) { margin: 0; max-width: 58ch; color: var(--muted); }
+    .contact-panel .eyebrow { margin-bottom: 0.7rem; color: var(--gold); max-width: none; }
+    .contact-actions { display: flex; flex-wrap: wrap; gap: 0.7rem; }
+
+    footer {
+      padding: 2.6rem 0 2.2rem;
+      border-top: 1px solid var(--line);
+      color: var(--faint);
+      font-size: 0.82rem;
+    }
+    .footer-grid {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+    .footer-brand { max-width: 560px; }
+    .footer-brand .brand { margin-bottom: 0.8rem; }
+    .disclaimer { margin: 0; line-height: 1.7; }
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem 1.3rem;
+      align-content: start;
+    }
+    .footer-links a { color: var(--muted); text-decoration: none; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-bottom { margin-top: 2rem; color: var(--faint); font-size: 0.76rem; }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(242, 180, 92, 0.42); }
+      70% { box-shadow: 0 0 0 9px rgba(242, 180, 92, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(242, 180, 92, 0); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    @keyframes breathe {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.015); }
+    }
+
+    @media (max-width: 1000px) {
+      .hero-grid, .section-head, .split { grid-template-columns: 1fr; }
+      .hero-art { min-height: 390px; margin-top: 1rem; }
+      .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .timeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .section-head { align-items: start; }
+    }
+    @media (max-width: 760px) {
+      .site-nav { display: none; }
+      .header-inner { height: 64px; }
+      .header-cta { margin-left: auto; }
+      .grid-3, .grid-4, .timeline { grid-template-columns: 1fr; }
+      .float-card { transform: scale(0.9); }
+      .profile-card { left: -0.6rem; }
+      .hud-card { right: -0.6rem; }
+      .footer-grid { flex-direction: column; }
+    }
+    @media (max-width: 420px) {
+      .wrap { width: calc(100% - 1.6rem); }
+      .header-cta { padding: 0.5rem 0.7rem; font-size: 0.72rem; }
+      .hero-art { min-height: 330px; }
+      .float-card { transform: scale(0.82); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#top" aria-label="Aurelis home">
+        <svg class="brand-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <circle cx="16" cy="16" r="13" stroke="currentColor" stroke-opacity="0.32" stroke-width="1.2"/>
+          <path d="M10 23.5 16 8l6 15.5" stroke="url(#brandGradient)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M12.4 19.2h7.2" stroke="url(#brandGradient)" stroke-width="2.4" stroke-linecap="round"/>
+          <circle cx="24.5" cy="9.5" r="2" fill="#f2b45c"/>
+          <defs>
+            <linearGradient id="brandGradient" x1="10" y1="8" x2="22" y2="24" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#ffd79a"/>
+              <stop offset="1" stop-color="#f2b45c"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <span>Aurelis</span>
+      </a>
+
+      <nav class="site-nav" aria-label="Primary">
+        <a href="#about">Overview</a>
+        <a href="#features">Features</a>
+        <a href="#fair-play">Fair play</a>
+        <a href="#status">Status</a>
+        <a href="#faq">FAQ</a>
+        <a href="privacy.html">Privacy</a>
+      </nav>
+
+      <a class="header-cta" href="#contact"><span class="dot" aria-hidden="true"></span> In development</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <span class="badge"><span class="pulse" aria-hidden="true"></span> Pre-alpha · Active development</span>
+          <h1>Your world,<br><span class="grad">in a new light.</span></h1>
+          <p class="lede">Aurelis is an independent, local-first Minecraft: Java Edition launcher and Fabric client. Built for clean profiles, honest performance tools, and a HUD that stays out of your way.</p>
+          <div class="actions">
+            <a class="btn primary" href="#about">Explore the project</a>
+            <a class="btn ghost" href="privacy.html">Read the privacy policy</a>
+          </div>
+          <p class="fine">No public build yet. This page is the official information hub while Aurelis is in development.</p>
+        </div>
+
+        <div class="hero-art" aria-hidden="true">
+          <div class="solar">
+            <div class="ring ring-outer"></div>
+            <div class="ring ring-mid"></div>
+            <div class="ring ring-inner"></div>
+            <div class="sun"></div>
+            <span class="planet p1"></span>
+            <span class="planet p2"></span>
+          </div>
+          <div class="float-card profile-card">
+            <span class="float-label">Active profile</span>
+            <strong>26.3 · Fabric</strong>
+            <span class="status-pill"><i></i> Ready to launch</span>
+          </div>
+          <div class="float-card hud-card">
+            <span class="float-label">Aurelis HUD</span>
+            <div class="hud-row"><span>FPS</span><b>240</b></div>
+            <div class="hud-row"><span>CPS</span><b>8</b></div>
+            <div class="hud-row"><span>Ping</span><b>34<span>ms</span></b></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">The idea</p>
+            <h2>A launcher that gets out of the way.</h2>
+          </div>
+          <p>Aurelis is being designed for players who want control without clutter. Separate profiles keep versions, mods, and settings from bleeding into each other. The interface stays quiet until you need it, and every action has a clear result.</p>
+        </div>
+
+        <div class="grid-3">
+          <article class="card">
+            <div class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3.8 7.5v9L12 21l8.2-4.5v-9L12 3Z"/><path d="m3.8 7.5 8.2 4.5 8.2-4.5M12 12v9"/></svg>
+            </div>
+            <h3>One place for every profile</h3>
+            <p>Each profile gets its own game directory, loader, Java runtime, memory, resolution, mods, and HUD layout. Duplicate a setup or start clean without touching the others.</p>
+          </article>
+          <article class="card">
+            <div class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"/><path d="M4 9h16M8 13h3M8 16h6"/></svg>
+            </div>
+            <h3>Real tools, not buzzwords</h3>
+            <p>Downloads are verified, repairs only replace broken managed files, and performance suggestions explain the trade-off. No invented FPS numbers and no silent “optimizations.”</p>
+          </article>
+          <article class="card">
+            <div class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 6v5c0 4.6 2.9 8.3 7 10 4.1-1.7 7-5.4 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+            </div>
+            <h3>Local-first by design</h3>
+            <p>Profiles, worlds, logs, and playtime stay on your device. Account tokens live in the operating system credential vault. Telemetry is off by default — and the privacy policy says exactly what happens.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">What is being built</p>
+            <h2>Everything in one place. Nothing forced on you.</h2>
+          </div>
+          <p>The launcher and the in-game client are separate components. You can use Aurelis purely as a launcher, or add the Fabric client for HUD modules and cosmetic features. Modules are individually configurable and can be disabled per server.</p>
+        </div>
+
+        <div class="grid-4">
+          <article class="card">
+            <div class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c.6-3.3 3.3-5.2 7-5.2s6.4 1.9 7 5.2"/></svg>
+            </div>
+            <h3>Accounts and profiles</h3>
+            <p>Microsoft device-code sign-in, multiple accounts, secure token storage, and isolated installations for Vanilla, Fabric, Quilt, Forge, and NeoForge where available.</p>
+            <span class="tag">Core system</span>
+          </article>
+
+          <article class="card">
+            <div class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5l4 2v6l-4 2v1H8v-1l-4-2v-6l4-2V4Z"/><path d="M8 9h8M9 14h6"/></svg>
+            </div>
+            <h3>Mods and modpacks</h3>
+            <p>Search and install from Modrinth, resolve dependencies, check for duplicates and version conflicts, and install <code>.mrpack</code> packs with verified files.</p>
+            <span class="tag">Modrinth integration</span>
+          </article>
+
+          <article class="card">
+            <div class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4M7 9h4M7 12h7"/></svg>
+            </div>
+            <h3>HUD Studio</h3>
+            <p>Drag, resize, recolor, and restyle every module on a live preview. Save multiple layouts, export them, or bind a layout to a specific server.</p>
+            <span class="tag">In development</span>
+          </article>
+
+          <article class="card">
+            <div class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m13 2-8 12h6l-1 8 8-12h-6l1-8Z"/></svg>
+            </div>
+            <h3>In-game client</h3>
+            <p>Fair-play HUD modules for CPS, keystrokes, FPS, ping, coordinates, armor, potions, crosshair, zoom, stopwatch, hit counters, target HUD, and waypoints.</p>
+            <span class="tag">Fabric · 26.3</span>
+          </article>
+
+          <article class="card">
+            <div class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.4 2.6 3.6 5.7 3.6 9S14.4 18.4 12 21c-2.4-2.6-3.6-5.7-3.6-9S9.6 5.6 12 3Z"/></svg>
+            </div>
+            <h3>Worlds and servers</h3>
+            <p>Scan worlds, back them up, restore safely, and quick-play. Save servers with groups, favorites, status, per-server profiles, and HUD overrides.</p>
+            <span class="tag">Quality of life</span>
+          </article>
+
+          <article class="card">
+            <div class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 6v5c0 4.6 2.9 8.3 7 10 4.1-1.7 7-5.4 7-10V6l-7-3Z"/><path d="M12 8v4M12 15h.01"/></svg>
+            </div>
+            <h3>Diagnostics and repair</h3>
+            <p>Crash detection, readable log excerpts, missing-dependency hints, one-click repair, Safe Mode, and exportable diagnostic reports with tokens redacted.</p>
+            <span class="tag">Troubleshooting</span>
+          </article>
+
+          <article class="card">
+            <div class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18a8 8 0 1 1 16 0"/><path d="m12 14 3-3M6 18h12"/></svg>
+            </div>
+            <h3>Performance tools</h3>
+            <p>Render-distance, particle, entity, and memory presets with clear explanations. Session playtime and frame data are stored locally — not turned into marketing claims.</p>
+            <span class="tag">Honest tuning</span>
+          </article>
+
+          <article class="card">
+            <div class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.1 5.4L20 10l-4.4 3.6L17 20l-5-3.2L7 20l1.4-6.4L4 10l5.9-1.6L12 3Z"/></svg>
+            </div>
+            <h3>Cosmetics with labels</h3>
+            <p>Preview account skins and capes, apply local client-only capes, and choose launcher themes. Client-only cosmetics are never presented as visible to other players.</p>
+            <span class="tag">Client-side</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="fair-play">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Fair play</p>
+            <h2>Useful on the HUD. Invisible to the fight.</h2>
+          </div>
+          <p>Aurelis is built around information and customization, not combat automation. The client will not include cheats, and it will not try to evade server anti-cheat systems.</p>
+        </div>
+
+        <div class="split">
+          <ul class="checklist">
+            <li><span class="check" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2.5 6.2 2.2 2.2 4.8-4.8"/></svg></span><span><strong>No combat automation.</strong> No kill aura, reach, aim assist, hitbox expansion, auto-clicker, or packet manipulation.</span></li>
+            <li><span class="check" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2.5 6.2 2.2 2.2 4.8-4.8"/></svg></span><span><strong>Only information the game already gives you.</strong> HUD modules display FPS, ping, coordinates, armor, potions, and similar client-side data.</span></li>
+            <li><span class="check" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2.5 6.2 2.2 2.2 4.8-4.8"/></svg></span><span><strong>Per-server control.</strong> Optional modules can be disabled for a server, and server-specific HUD layouts keep your setup appropriate for the community.</span></li>
+            <li><span class="check" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2.5 6.2 2.2 2.2 4.8-4.8"/></svg></span><span><strong>Honest cosmetics.</strong> Local capes and themes are client-only. If a cosmetic is not visible to other players, Aurelis says so.</span></li>
+          </ul>
+
+          <aside class="quote-panel">
+            <p class="eyebrow">The standard</p>
+            <p>“If it changes what the server sees or what your character can do in combat, it does not belong in Aurelis.”</p>
+            <small>Fair-play boundary for the in-game client.</small>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="security">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Security and privacy</p>
+            <h2>Your account stays yours.</h2>
+          </div>
+          <p>Authentication happens in your browser through Microsoft’s device-code flow. Aurelis never asks for your Microsoft password, and it never stores one. The full policy is available in the privacy section.</p>
+        </div>
+
+        <div class="grid-4">
+          <article class="card">
+            <div class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></svg>
+            </div>
+            <h3>No password handling</h3>
+            <p>You sign in on Microsoft’s site. Aurelis receives tokens, not credentials, and never sees your MFA codes or recovery information.</p>
+          </article>
+          <article class="card">
+            <div class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 6v5c0 4.6 2.9 8.3 7 10 4.1-1.7 7-5.4 7-10V6l-7-3Z"/><path d="M9 12h6M12 9v6"/></svg>
+            </div>
+            <h3>OS-level token storage</h3>
+            <p>Refresh tokens are kept in the platform credential vault. Access tokens stay in memory and are not written to logs or configuration files.</p>
+          </article>
+          <article class="card">
+            <div class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M7 4v6M17 4v6M5 11h14v9H5z"/><path d="m9 15 2 2 4-4"/></svg>
+            </div>
+            <h3>Verified downloads</h3>
+            <p>Minecraft files, mods, and runtimes are checked against published hashes where available. ZIP extraction rejects path traversal and unexpected absolute paths.</p>
+          </article>
+          <article class="card">
+            <div class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v8"/></svg>
+            </div>
+            <h3>Local by default</h3>
+            <p>No telemetry, no analytics, no background account sync. Logs and crash reports stay on your device unless you explicitly export them.</p>
+          </article>
+        </div>
+        <p class="fine">Read the full <a href="privacy.html" style="color: var(--gold-2);">privacy policy</a> for the complete list of local data and third-party services.</p>
+      </div>
+    </section>
+
+    <section class="section" id="status">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Status</p>
+            <h2>Built in the open, one verified milestone at a time.</h2>
+          </div>
+          <p>Aurelis is pre-alpha. The foundation is the current focus; no public build is available. The roadmap below describes the order of work, not promised dates.</p>
+        </div>
+
+        <div class="timeline">
+          <article class="step current">
+            <span class="num">01</span>
+            <h3>Foundation</h3>
+            <p>App shell, design system, local data, settings, logging, and the public project pages.</p>
+            <span class="badge">Current focus</span>
+          </article>
+          <article class="step">
+            <span class="num">02</span>
+            <h3>Minecraft core</h3>
+            <p>Metadata, verified downloads, Java management, installation, launch pipeline, and Microsoft authentication.</p>
+            <span class="tag">Planned</span>
+          </article>
+          <article class="step">
+            <span class="num">03</span>
+            <h3>Mods, worlds, servers</h3>
+            <p>Modrinth, modpacks, compatibility checks, world backups, server status, and quick connect.</p>
+            <span class="tag">Planned</span>
+          </article>
+          <article class="step">
+            <span class="num">04</span>
+            <h3>Client and HUD</h3>
+            <p>Fabric client, HUD modules, HUD Studio, layouts, cosmetics, diagnostics, and a signed beta.</p>
+            <span class="tag">Planned</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Questions</p>
+            <h2>The short answers.</h2>
+          </div>
+          <p>If something is not covered here, the contact section below is the right place to ask. For API review questions, the privacy policy describes the intended data handling in detail.</p>
+        </div>
+
+        <div class="faq">
+          <details>
+            <summary>Is there a download available?</summary>
+            <p>Not yet. Aurelis is pre-alpha. This page will be updated when a signed public build is available. There are no unofficial downloads, and you should not trust a build claiming to be Aurelis from anywhere else.</p>
+          </details>
+          <details>
+            <summary>Is Aurelis free?</summary>
+            <p>Pricing has not been announced. If a paid edition is introduced, it will be stated clearly before release. The project will not hide costs behind a fake “free” download.</p>
+          </details>
+          <details>
+            <summary>Is Aurelis affiliated with Mojang or Microsoft?</summary>
+            <p>No. Aurelis is an independent project. It is not affiliated with, endorsed by, or associated with Mojang Studios, Microsoft, Fabric, Modrinth, or any other third party. Minecraft is a trademark of Mojang Synergies AB.</p>
+          </details>
+          <details>
+            <summary>Does it support cracked or offline accounts?</summary>
+            <p>No. Aurelis is designed for legitimate Microsoft accounts and respects Minecraft licensing. It does not bypass authentication or ownership checks.</p>
+          </details>
+          <details>
+            <summary>Which Minecraft versions will the in-game client support?</summary>
+            <p>The launcher is being designed to manage multiple Minecraft versions. The initial Fabric client target is Minecraft 26.3. Other versions can still be launched, but Aurelis modules require a compatible client build; the launcher will say so clearly.</p>
+          </details>
+          <details>
+            <summary>Is the HUD a cheat?</summary>
+            <p>No. Aurelis is fair-play only. The HUD displays information the game already provides, and the client does not include kill aura, reach, aim assist, packet manipulation, or anti-cheat bypasses. Optional modules can be disabled per server.</p>
+          </details>
+          <details>
+            <summary>Where is my data stored?</summary>
+            <p>Profiles, worlds, settings, logs, and playtime are stored locally on your device. Account refresh tokens are stored in your operating system’s credential vault. The app does not run a telemetry service. See the <a href="privacy.html">privacy policy</a>.</p>
+          </details>
+          <details>
+            <summary>Will it work on macOS or Linux?</summary>
+            <p>Windows is the first target. The planned stack is cross-platform, but macOS and Linux support have not been announced. The website will state supported platforms before any release.</p>
+          </details>
+          <details>
+            <summary>How can I follow development?</summary>
+            <p>Use the GitHub repository linked in the contact section. This page is the official information hub; any future release notes and download links will be published here first.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="wrap">
+        <div class="contact-panel">
+          <div>
+            <p class="eyebrow">Contact</p>
+            <h2>Building something honest.</h2>
+            <p>Questions about Aurelis, the review process, or beta testing? Get in touch. For security or privacy questions, please include “Aurelis” in the subject line.</p>
+            <p class="fine">For Mojang/Microsoft API reviewers: Aurelis is currently in development and has no public build. The linked privacy policy describes the intended data handling for the launcher and this website.</p>
+          </div>
+          <div class="contact-actions">
+            <a class="btn primary" href="mailto:YOUR-EMAIL?subject=Aurelis%20inquiry">Email the project</a>
+            <a class="btn ghost" href="https://github.com/YOUR-USERNAME/aurelis">GitHub repository</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="#top" aria-label="Aurelis home">
+            <svg class="brand-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+              <circle cx="16" cy="16" r="13" stroke="currentColor" stroke-opacity="0.32" stroke-width="1.2"/>
+              <path d="M10 23.5 16 8l6 15.5" stroke="#f2b45c" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12.4 19.2h7.2" stroke="#f2b45c" stroke-width="2.4" stroke-linecap="round"/>
+              <circle cx="24.5" cy="9.5" r="2" fill="#f2b45c"/>
+            </svg>
+            <span>Aurelis</span>
+          </a>
+          <p class="disclaimer">Aurelis is an independent project and is not affiliated with, endorsed by, or associated with Mojang Studios, Microsoft, Fabric, Modrinth, or any other third party. “Minecraft” is a trademark of Mojang Synergies AB. All other names are used for identification only.</p>
+        </div>
+        <nav class="footer-links" aria-label="Footer">
+          <a href="#about">Overview</a>
+          <a href="#features">Features</a>
+          <a href="#fair-play">Fair play</a>
+          <a href="#status">Status</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="mailto:YOUR-EMAIL">Contact</a>
+        </nav>
+      </div>
+      <p class="footer-bottom">© 2026 Aurelis. Website content is provided for project information. Brand assets may not be reused without permission.</p>
+    </div>
+  </footer>
+</body>
+</html>
