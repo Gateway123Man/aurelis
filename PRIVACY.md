@@ -213,8 +213,8 @@ If a future feature would send new categories of data off your device, it will b
 ## 11. Contact
 
 **Email:** mvpthespear1st@gmail.com
-**Repository:** https://github.com/YOUR-USERNAME/aurelis
-**Website:** https://YOUR-USERNAME.github.io/aurelis/
+**Repository:** https://github.com/Gateway123Man/aurelis
+**Website:** https://Gateway123Man.github.io/aurelis/
 
 ---
 
