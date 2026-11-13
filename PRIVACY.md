@@ -5,7 +5,7 @@
 
 Aurelis is an independent, local-first project. This policy explains exactly what is stored, what leaves your device, and what does not. It is written to be read, not to hide things.
 
-If something here is unclear, contact **YOUR-EMAIL**.
+If something here is unclear, contact **mvpthespear1st@gmail.com**.
 
 ---
 
@@ -23,7 +23,7 @@ If something here is unclear, contact **YOUR-EMAIL**.
 
 ## 1. Who is responsible
 
-Aurelis is an independent project maintained by its developer. For any privacy question, request, or complaint, contact **YOUR-EMAIL**.
+Aurelis is an independent project maintained by its developer. For any privacy question, request, or complaint, contact **mvpthespear1st@gmail.com**.
 
 Aurelis is **not affiliated with** Mojang Studios, Microsoft, Fabric, Modrinth, Adoptium, or any other third party. Those services have their own privacy policies, which apply when you use them through Aurelis.
 
@@ -180,7 +180,7 @@ Aurelis takes the following measures:
 - ZIP extraction that rejects path traversal and unexpected absolute paths.
 - Redaction of tokens and session data in exported diagnostics.
 
-No system is perfectly secure. If you believe you have found a vulnerability, please report it privately to **YOUR-EMAIL** rather than opening a public issue with exploit details.
+No system is perfectly secure. If you believe you have found a vulnerability, please report it privately to **mvpthespear1st@gmail.com** rather than opening a public issue with exploit details.
 
 ---
 
